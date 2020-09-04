@@ -7,17 +7,28 @@ require 'states/TitleScreenState'
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 800
 
-VIRTUAL_WIDTH = 1280
-VIRTUAL_HEIGHT = 720
+VIRTUAL_WIDTH = 800
+VIRTUAL_HEIGHT = 450
+
+local machineAtlas
+local machineSprite
+local fps = 3
+local animationTimer = 1 / fps
+local frame = 1
+local totalFrames = 3
+local xoffset
 
 function love.load()
 	love.graphics.setDefaultFilter('nearest', 'nearest')
 
 	love.window.setTitle('The Great Machine')
 
-	smallFont = love.graphics.newFont('fonts/KronaOne.ttf', 40)
-	mediumFont = love.graphics.newFont('fonts/KronaOne.ttf', 60)
-	largeFont = love.graphics.newFont('fonts/KronaOne.ttf', 90)
+	machineAtlas = love.graphics.newImage('graphics/Machine1_SpriteSheet.png')
+	machineSprite = love.graphics.newQuad(0, 0, 200, 350, machineAtlas:getDimensions())
+
+	smallFont = love.graphics.newFont('fonts/KronaOne.ttf', 10)
+	mediumFont = love.graphics.newFont('fonts/KronaOne.ttf', 20)
+	largeFont = love.graphics.newFont('fonts/KronaOne.ttf', 45)
 	love.graphics.setFont(smallFont)
 
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -57,6 +68,16 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
+
+	animationTimer = animationTimer - dt
+	if animationTimer <= 0 then
+		animationTimer = 1 / fps
+		frame = frame + 1
+		if frame > totalFrames then frame = 1 end
+		xoffset = 200 * (frame - 1)
+		machineSprite:setViewport(xoffset, 0, 200, 350)
+	end
+
 	gStateMachine:update(dt)
 
 	love.keyboard.keysPressed = {} 
@@ -64,7 +85,11 @@ end
 
 function love.draw()
 	push:start()
+
 	gStateMachine:render()
+
+	love.graphics.draw(machineAtlas, machineSprite, VIRTUAL_WIDTH / 2 - 100, VIRTUAL_HEIGHT - 350)
+
 	displayFPS()
 	push:finish()
 end
