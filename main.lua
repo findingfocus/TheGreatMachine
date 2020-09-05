@@ -3,6 +3,9 @@ Class = require 'util/class'
 require 'states/StateMachine'
 require 'states/BaseState'
 require 'states/TitleScreenState'
+require 'states/PlayState'
+require 'states/EndState'
+require 'Player'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 800
@@ -10,21 +13,10 @@ WINDOW_HEIGHT = 800
 VIRTUAL_WIDTH = 800
 VIRTUAL_HEIGHT = 450
 
-local machineAtlas
-local machineSprite
-local fps = 3
-local animationTimer = 1 / fps
-local frame = 1
-local totalFrames = 3
-local xoffset
-
 function love.load()
 	love.graphics.setDefaultFilter('nearest', 'nearest')
 
 	love.window.setTitle('The Great Machine')
-
-	machineAtlas = love.graphics.newImage('graphics/Machine1_SpriteSheet.png')
-	machineSprite = love.graphics.newQuad(0, 0, 200, 350, machineAtlas:getDimensions())
 
 	smallFont = love.graphics.newFont('fonts/KronaOne.ttf', 10)
 	mediumFont = love.graphics.newFont('fonts/KronaOne.ttf', 20)
@@ -38,7 +30,9 @@ function love.load()
 	})
 
 	gStateMachine = StateMachine {
-		['titleState'] = function() return TitleScreenState() end
+		['titleState'] = function() return TitleScreenState() end,
+		['playState'] = function() return PlayState() end,
+		['endState'] = function() return EndState() end
 	}
 
 	gStateMachine:change('titleState')
@@ -69,14 +63,11 @@ end
 
 function love.update(dt)
 
-	animationTimer = animationTimer - dt
-	if animationTimer <= 0 then
-		animationTimer = 1 / fps
-		frame = frame + 1
-		if frame > totalFrames then frame = 1 end
-		xoffset = 200 * (frame - 1)
-		machineSprite:setViewport(xoffset, 0, 200, 350)
+	if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+		gStateMachine:change('playState')
 	end
+
+	Player:update(dt)
 
 	gStateMachine:update(dt)
 
@@ -85,10 +76,11 @@ end
 
 function love.draw()
 	push:start()
+	love.graphics.clear(5/255, 60/255, 5/255, 255/255)
 
 	gStateMachine:render()
 
-	love.graphics.draw(machineAtlas, machineSprite, VIRTUAL_WIDTH / 2 - 100, VIRTUAL_HEIGHT - 350)
+	Player:render()
 
 	displayFPS()
 	push:finish()
