@@ -1,17 +1,20 @@
 push = require 'util/push'
 Class = require 'util/class'
-require 'states/StateMachine'
-require 'states/BaseState'
-require 'states/TitleScreenState'
-require 'states/PlayState'
-require 'states/EndState'
-require 'Player'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 800
 
 VIRTUAL_WIDTH = 800
 VIRTUAL_HEIGHT = 450
+
+require 'states/StateMachine'
+require 'states/BaseState'
+require 'states/TitleScreenState'
+require 'states/PlayState'
+require 'states/EndState'
+require 'Machine'
+
+machine = Machine()
 
 function love.load()
 	love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -67,8 +70,6 @@ function love.update(dt)
 		gStateMachine:change('playState')
 	end
 
-	Player:update(dt)
-
 	gStateMachine:update(dt)
 
 	love.keyboard.keysPressed = {} 
@@ -77,11 +78,7 @@ end
 function love.draw()
 	push:start()
 	love.graphics.clear(5/255, 60/255, 5/255, 255/255)
-
 	gStateMachine:render()
-
-	Player:render()
-
 	displayFPS()
 	push:finish()
 end
