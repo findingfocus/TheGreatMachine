@@ -3,8 +3,8 @@ Ideas = Class{}
 ideaFallSpeed = 1
 
 function Ideas:init()
-	self.x = math.random(0, VIRTUAL_WIDTH - 40)
-	self.y = -10
+	self.x = math.random(5, VIRTUAL_WIDTH - 50)
+	self.y = -20
 end
 
 function Ideas:update(dt)

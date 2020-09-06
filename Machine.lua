@@ -50,6 +50,4 @@ end
 
 function Machine:render()
 	love.graphics.draw(machineAtlas, machineSprite, self.x, self.y)
-	--love.graphics.printf('self.x = ' .. tostring(self.x), 0, 120, VIRTUAL_WIDTH, 'center')
-	--love.graphics.printf('timer = ' .. tostring(animationTimer), 0, 120, VIRTUAL_WIDTH, 'center')
 end 
