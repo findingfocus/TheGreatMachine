@@ -13,13 +13,20 @@ require 'states/TitleScreenState'
 require 'states/PlayState'
 require 'states/EndState'
 require 'Machine'
+require 'Ideas'
 
 machine = Machine()
+
+ideas = Ideas{}
+
+ideaSpawnTimer = 0
 
 function love.load()
 	love.graphics.setDefaultFilter('nearest', 'nearest')
 
 	love.window.setTitle('The Great Machine')
+
+	math.randomseed(os.time())
 
 	smallFont = love.graphics.newFont('fonts/KronaOne.ttf', 10)
 	mediumFont = love.graphics.newFont('fonts/KronaOne.ttf', 20)
