@@ -41,7 +41,8 @@ function love.load()
 	})
 
 	sounds = {
-		['point'] = love.audio.newSource('sounds/point.wav','static')
+		['music'] = love.audio.newSource('sounds/greatMachineMusic.wav', 'static'),
+		['point'] = love.audio.newSource('sounds/point.wav', 'static')
 	}
 
 	gStateMachine = StateMachine {
@@ -50,9 +51,11 @@ function love.load()
 		['endState'] = function() return EndState() end
 	}
 
-	gStateMachine:change('endState')
+	gStateMachine:change('titleState')
 
 	love.keyboard.keysPressed = {}
+
+
 
 end
 
@@ -77,6 +80,9 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
+
+	sounds['music']:setLooping(true)
+	sounds['music']:play()
 
 	if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
 		gStateMachine:change('playState')
