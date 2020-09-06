@@ -86,7 +86,7 @@ function love.draw()
 	push:start()
 	love.graphics.clear(5/255, 60/255, 5/255, 255/255)
 	gStateMachine:render()
-	love.graphics.print('spawnTimer = ' .. tostring(ideaSpawnTimer), 10, 10)
+	--love.graphics.print('spawnTimer = ' .. tostring(ideaSpawnTimer), 10, 10)
 	displayFPS()
 	push:finish()
 end

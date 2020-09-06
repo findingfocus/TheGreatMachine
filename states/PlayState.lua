@@ -23,9 +23,9 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
-	love.graphics.printf('hello play state', 0, 10, VIRTUAL_WIDTH, 'center')
-	machine:render()
+	--love.graphics.printf('hello play state', 0, 10, VIRTUAL_WIDTH, 'center')
 	for k, ideas in pairs(ideaList) do
 		ideas:render()
 	end
+	machine:render()
 end

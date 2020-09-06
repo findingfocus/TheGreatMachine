@@ -3,7 +3,7 @@ Ideas = Class{}
 ideaFallSpeed = 1
 
 function Ideas:init()
-	self.x = math.random(5, VIRTUAL_WIDTH - 50)
+	self.x = math.random(85, VIRTUAL_WIDTH - 75)
 	self.y = -20
 end
 
