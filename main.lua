@@ -31,6 +31,7 @@ function love.load()
 	smallFont = love.graphics.newFont('fonts/KronaOne.ttf', 10)
 	mediumFont = love.graphics.newFont('fonts/KronaOne.ttf', 20)
 	largeFont = love.graphics.newFont('fonts/KronaOne.ttf', 45)
+	endFont = love.graphics.newFont('fonts/KronaOne.ttf', 30)
 	love.graphics.setFont(smallFont)
 
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -39,13 +40,17 @@ function love.load()
 		resizable = false
 	})
 
+	sounds = {
+		['point'] = love.audio.newSource('sounds/point.wav','static')
+	}
+
 	gStateMachine = StateMachine {
 		['titleState'] = function() return TitleScreenState() end,
 		['playState'] = function() return PlayState() end,
 		['endState'] = function() return EndState() end
 	}
 
-	gStateMachine:change('titleState')
+	gStateMachine:change('endState')
 
 	love.keyboard.keysPressed = {}
 
@@ -94,5 +99,5 @@ end
 function displayFPS()
 	love.graphics.setFont(smallFont)
 	love.graphics.setColor(0/255, 255/255, 0/255, 255/255)
-	love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
+	--love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
 end
