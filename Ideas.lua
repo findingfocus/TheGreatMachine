@@ -4,7 +4,7 @@ ideaFallSpeed = 1
 
 function Ideas:init()
 	self.x = math.random(85, VIRTUAL_WIDTH - 75)
-	self.y = -20
+	self.y = -25
 end
 
 function Ideas:update(dt)

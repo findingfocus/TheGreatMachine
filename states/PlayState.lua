@@ -16,6 +16,12 @@ function PlayState:update(dt)
 
 	for k, ideas in pairs(ideaList) do
 		ideas:update(dt)
+		if machine.x + 105 < ideas.x + 15 and machine.x + 105 > ideas.x - 15 then
+			if ideas.y > VIRTUAL_HEIGHT - 210 and ideas.y < VIRTUAL_HEIGHT - 180 then
+				table.remove(ideaList, k)
+			end
+		end
+
 		if ideas.y > VIRTUAL_HEIGHT + 10 then
 			table.remove(ideaList, k)
 		end
