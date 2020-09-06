@@ -41,11 +41,13 @@ function Machine:update(dt)
 		self.x = math.min(self.x + self.dx, VIRTUAL_WIDTH - 180)
 	end
 
+	--[[
 	if love.keyboard.wasPressed('r') then
 		self.x = 300
 		self.y = 100
 		self.dx = 0
 	end
+	--]]
 end
 
 function Machine:render()
