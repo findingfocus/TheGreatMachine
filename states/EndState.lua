@@ -5,6 +5,7 @@ function EndState:init()
 end 
 
 function EndState:update(dt)
+	ideaList = {}
 	if love.keyboard.wasPressed('r') then
 		pointCounter = 0
 		gStateMachine:change('playState')
